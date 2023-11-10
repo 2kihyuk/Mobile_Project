@@ -4,33 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    >
-
+    tools:context=".JoinActivity">
 
     <EditText
-        android:id="@+id/IdText"
+        android:id="@+id/Id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Id"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/Passwordtext"
+        app:layout_constraintBottom_toTopOf="@+id/Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/Passwordtext"
+        android:id="@+id/Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
         android:hint="Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/IdText"
+        app:layout_constraintTop_toBottomOf="@id/Id"
         app:layout_constraintStart_toStartOf="parent"></EditText>
-<!--        />-->
+    <!--        />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,18 +39,11 @@
         android:layout_marginBottom="20dp">
 
         <Button
-            android:id="@+id/LoginBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="로그인" />
-
-        <Button
-            android:id="@+id/SignupBtn"
+            android:id="@+id/joinBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="회원가입" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
