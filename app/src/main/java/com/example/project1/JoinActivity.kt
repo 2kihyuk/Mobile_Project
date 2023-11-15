@@ -35,6 +35,8 @@ class JoinActivity : AppCompatActivity() { //회원 가입기능.
 
             val id = binding.Id.text.toString()
             val pwd = binding.Password.text.toString()
+            val name = binding.Name.text.toString()
+            val birthday=binding.BirthDay.text.toString()  //db에 이 정보 저장해야하나?
 
             if(id.isEmpty()){
                 Toast.makeText(this,"이메일이 비어있습니다.",Toast.LENGTH_SHORT).show()

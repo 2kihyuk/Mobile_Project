@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_listItem"
-            app:destination="@id/listItem" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -44,9 +41,4 @@
             android:id="@+id/action_settingsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
-    <activity
-        android:id="@+id/listItem"
-        android:name="com.example.project1.ListItem"
-        android:label="activity_list_item"
-        tools:layout="@layout/activity_list_item" />
 </navigation>
