@@ -6,21 +6,23 @@
     android:layout_height="wrap_content" >
 
     <LinearLayout
+
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/item_border"
         android:orientation="horizontal"
-        android:padding="4dp">
+        android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/listImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/rounded_corner_image"
-            android:clipToOutline="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/sample1" />
+<!--        <ImageView-->
+<!--            android:id="@+id/listImage"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="120dp"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:background="@drawable/rounded_corner_image"-->
+<!--            android:clipToOutline="true"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/sample1" />-->
 
         <LinearLayout
             android:layout_width="match_parent"

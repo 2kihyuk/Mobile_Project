@@ -20,6 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+                <!--
+                레이아웃에서 이미지 뺄거니까, 이미지는 업로드 안할거라서 ,
+                등록 사용자의 이름이 들어갈 공간, 상품이름, 상품의 구체적인 설명 들어갈 공간 레이아웃
+                꾸며주세요-->
+
             <ImageView
                 android:id="@+id/detailImage"
                 android:layout_width="match_parent"
@@ -167,26 +172,26 @@
 <!--detailLikeIcon 자리에 버튼으로 대체. 글을 등록한 자신이 이 글을 수정할수 있는 버튼.
     기능 구현할때 사용자의 id를 체크하여 해당글을 쓴 사람의 id와 접속한 id 의 값이 다르면 해당 버튼
     invisible. 같으면 visible? -->
-        <ImageView
-            android:id="@+id/detailLikeIcon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/love_empty"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+<!--        <ImageView-->
+<!--            android:id="@+id/detailLikeIcon"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:layout_marginBottom="25dp"-->
+<!--            android:background="@drawable/love_empty"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="1dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="15dp"
-            android:background="#cccccc"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/detailLikeIcon"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <View-->
+<!--            android:id="@+id/view"-->
+<!--            android:layout_width="1dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginBottom="15dp"-->
+<!--            android:background="#cccccc"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/detailLikeIcon"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
             android:id="@+id/price"
@@ -198,10 +203,27 @@
             android:textSize="22dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/Editbutton"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button"
+            android:text="수정하기"
+            android:contentDescription="수정하기"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:stateListAnimator="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/Chatbutton" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Chatbutton"
             android:layout_width="100dp"
             android:layout_height="35dp"
             android:layout_marginRight="15dp"

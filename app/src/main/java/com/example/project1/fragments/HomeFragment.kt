@@ -33,6 +33,7 @@ class HomeFragment : Fragment() {
     private val itemsCollectionRef = db.collection("Item") // items는 Collection ID
     lateinit var binding: FragmentHomeBinding
     private lateinit var rvAdapter: ContentsRVAdapter
+    private var selectedItemID: String? = null
 
 
 
@@ -55,14 +56,14 @@ class HomeFragment : Fragment() {
         val items = mutableListOf<ContentModel>()
 
 
-//        items.add(ContentModel("선풍기","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","35000"))
+
 
 
         val rvAdapter = ContentsRVAdapter(items)
         rv.adapter = rvAdapter
-        rv.layoutManager = LinearLayoutManager(context)
+        rv.layoutManager = LinearLayoutManager(context) // 리싸이클러뷰에 아이템 연결 .
 
-
+//데이터베이스에서 등록된 상품 가지고 아이템 상품 목록에 띄우기 완성.
         itemsCollectionRef.get().addOnSuccessListener { querySnapshot ->
             for (doc in querySnapshot) {
                 val listTitle = doc.getString("itemtitle") ?: ""
@@ -70,7 +71,7 @@ class HomeFragment : Fragment() {
                 val listContents = doc.getString("itemcontent") ?: ""
                 val listPrice = doc.getString("itemprice") ?: ""
 
-                val contentModel = ContentModel(listTitle, listContents, listPrice)
+                val contentModel = ContentModel(listTitle, listContents, listPrice,doc.id)
                 items.add(contentModel)
 
                 Log.d("itemcheck", listTitle)
@@ -84,7 +85,7 @@ class HomeFragment : Fragment() {
             exception->Log.w("Firestore", "Error getting documents: ", exception)
 
         }
-      ///////////////////////////////////////////여기까지 ㅣ정상
+
 
 
 
@@ -95,13 +96,14 @@ class HomeFragment : Fragment() {
         rvAdapter.itemClick = object :ContentsRVAdapter.ItemClick{ //아이템 클릭시. 데이터 가지고 해당 상품 페이지로 이동.
             override fun onClick(view: View, position: Int) {
                 Toast.makeText(context,items[position].listTitle,Toast.LENGTH_SHORT).show()
-//                val navController = Navigation.findNavController(requireView())
-//                navController.navigate(R.id.action_homeFragment_to_listItem)
 
+                selectedItemID = items[position].documentID
                 val intent = Intent(context,ListItem::class.java)
                 intent.putExtra("listTitle",items[position].listTitle)
                 intent.putExtra("listContents",items[position].listContents)
                 intent.putExtra("listPrice",items[position].listPrice)
+
+                Log.d("check",selectedItemID.toString())
 //                intent.putExtra("listImage",items[position].listImage)
 
                 context?.startActivity(intent)
@@ -116,19 +118,21 @@ class HomeFragment : Fragment() {
 
 
 
-
+                    //상품 추가 버튼 클릭시 상품 추가하는 액티비티로 이동.
                 binding.addListBtn.setOnClickListener {
                     val intent = Intent(context, AddListActivity::class.java)
+                    intent.putExtra("DocumentID",selectedItemID)
                     startActivity(intent)
 
                 }
-
+                    //하단바의 설정 탭 클릭시 설정 페이지로 이동
                 binding.settingstab.setOnClickListener {
                     val navController = Navigation.findNavController(requireView())
                     navController.navigate(R.id.action_homeFragment_to_settingsFragment)
 
 
                 }
+                    //하단바의 채팅탭 클릭시 내가 받은 메시지 띄우는 페이지로 이동
                 binding.chattab.setOnClickListener {
                     val navController = Navigation.findNavController(requireView())
                     navController.navigate(R.id.action_homeFragment_to_chatFragment)

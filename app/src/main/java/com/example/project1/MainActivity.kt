@@ -1,5 +1,4 @@
 package com.example.project1
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //로그아웃 버튼 클릭시 로그아웃.
         findViewById<Button>(R.id.logoutBtn).setOnClickListener {
             auth.signOut()
 
