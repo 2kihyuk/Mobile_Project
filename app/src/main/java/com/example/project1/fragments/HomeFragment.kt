@@ -1,6 +1,7 @@
 package com.example.project1.fragments
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -45,7 +46,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        val db = Firebase.firestore
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
 
@@ -54,30 +55,40 @@ class HomeFragment : Fragment() {
         val items = mutableListOf<ContentModel>()
 
 
-        items.add(ContentModel("선풍기","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","35000"))
-//        items.add(ContentModel("인형","인형입니다. 추억이 깃든 조나단 인형입니다. 가져가세요!","15000원"))
-//        items.add(ContentModel("기름","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","233000원"))
-//        items.add(ContentModel("자동차","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","3231000원"))
-//        items.add(ContentModel("자동차","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","3231000원"))
-//        items.add(ContentModel("자동차","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","3231000원"))
-//        items.add(ContentModel("자동차","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","3231000원"))
+//        items.add(ContentModel("선풍기","산지 한달 정도 된 선풍기 입니다. 싸게 내놓았으니 가져가세요!!!!","35000"))
 
 
         val rvAdapter = ContentsRVAdapter(items)
-        rv.adapter= rvAdapter
-
+        rv.adapter = rvAdapter
         rv.layoutManager = LinearLayoutManager(context)
 
 
+        itemsCollectionRef.get().addOnSuccessListener { querySnapshot ->
+            for (doc in querySnapshot) {
+                val listTitle = doc.getString("itemtitle") ?: ""
+                // val listImage = doc.getInt("listImage") // 이미지는 필요에 따라 추가
+                val listContents = doc.getString("itemcontent") ?: ""
+                val listPrice = doc.getString("itemprice") ?: ""
 
-        val db = Firebase.firestore
-        itemsCollectionRef.get().addOnSuccessListener {
-            for (doc in it) {
-                items.add(ContentModel())
-                Log.d("itemcheck",items.toString())// Item의 생성자가 doc를 받아 처리
+                val contentModel = ContentModel(listTitle, listContents, listPrice)
+                items.add(contentModel)
+
+                Log.d("itemcheck", listTitle)
+                Log.d("itemcheck", listContents)
+                Log.d("itemcheck", listPrice)
+                Log.d("itemcheck", items.toString())
+
             }
+            rvAdapter.notifyDataSetChanged()
+        }.addOnFailureListener{
+            exception->Log.w("Firestore", "Error getting documents: ", exception)
 
         }
+      ///////////////////////////////////////////여기까지 ㅣ정상
+
+
+
+
 
 
 
@@ -101,28 +112,33 @@ class HomeFragment : Fragment() {
 
 
 
-        binding.addListBtn.setOnClickListener {
-            val intent = Intent(context, AddListActivity::class.java)
-            startActivity(intent)
+
+
+
+
+
+                binding.addListBtn.setOnClickListener {
+                    val intent = Intent(context, AddListActivity::class.java)
+                    startActivity(intent)
+
+                }
+
+                binding.settingstab.setOnClickListener {
+                    val navController = Navigation.findNavController(requireView())
+                    navController.navigate(R.id.action_homeFragment_to_settingsFragment)
+
+
+                }
+                binding.chattab.setOnClickListener {
+                    val navController = Navigation.findNavController(requireView())
+                    navController.navigate(R.id.action_homeFragment_to_chatFragment)
+                }
+                // Inflate the layout for this fragment
+                return binding.root
+            }
+
 
         }
 
-        binding.settingstab.setOnClickListener {
-            val navController = Navigation.findNavController(requireView())
-            navController.navigate(R.id.action_homeFragment_to_settingsFragment)
 
 
-        }
-        binding.chattab.setOnClickListener {
-            val navController = Navigation.findNavController(requireView())
-            navController.navigate(R.id.action_homeFragment_to_chatFragment)
-        }
-        // Inflate the layout for this fragment
-        return binding.root
-    }
-
-
-
-
-
-    }

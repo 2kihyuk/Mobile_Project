@@ -21,6 +21,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 //}
 
 class ContentsRVAdapter(val items: MutableList<ContentModel>) : RecyclerView.Adapter<ContentsRVAdapter.ViewHolder>() {
+
+
+
     interface ItemClick{
         fun onClick(view: View, position: Int)
     }
@@ -39,6 +42,8 @@ class ContentsRVAdapter(val items: MutableList<ContentModel>) : RecyclerView.Ada
             }
         }
         holder.bindItem(items[position])
+
+
 
     }
 
