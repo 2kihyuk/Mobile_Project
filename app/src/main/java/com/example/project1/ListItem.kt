@@ -6,22 +6,29 @@ import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.example.project1.databinding.ActivityListItemBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
 class ListItem : AppCompatActivity() {
 
      lateinit var binding: ActivityListItemBinding
+    private val db: FirebaseFirestore = Firebase.firestore
+    private val itemsCollectionRef = db.collection("Item") // items는 Collection ID
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityListItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val docid =intent.getStringExtra("DocumentID")
+        val docid =intent.getStringExtra("DocId")
+
+        Log.d("DocumentCheck",docid.toString())
 
         val title = intent.getStringExtra("listTitle")
         val content = intent.getStringExtra("listContents")
         val price = intent.getStringExtra("listPrice")
-//        val image = intent.getStringExtra("listImage")
+
 
 
         Log.d("check",title.toString())
@@ -31,8 +38,7 @@ class ListItem : AppCompatActivity() {
         binding.detailTitle.text=title
         binding.price.text=price +"원"
         binding.detailContent.text=content
-        //상품의 이미지는 어떻게 받아와야함? 추후에는 이 과정들 모두 파이어베이스 파이어스토어에 저장한 값을 읽어와서 변환하는 과정으로 바꿔야함.
-        //이미지 안쓸거임.
+
 
         binding.backButton.setOnClickListener {
             val intent = Intent(this,MainActivity::class.java)
@@ -47,6 +53,9 @@ class ListItem : AppCompatActivity() {
             intent.putExtra("EditPrice",binding.price.text.toString())
             intent.putExtra("EditContent",binding.detailContent.toString())
             intent.putExtra("DocId",docid)
+            if (docid != null) {
+                Log.d("DocId",docid)
+            }
 
             startActivity(intent)
 

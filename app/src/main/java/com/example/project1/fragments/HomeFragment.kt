@@ -42,7 +42,6 @@ class HomeFragment : Fragment() {
 
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,18 +55,14 @@ class HomeFragment : Fragment() {
         val items = mutableListOf<ContentModel>()
 
 
-
-
-
         val rvAdapter = ContentsRVAdapter(items)
         rv.adapter = rvAdapter
         rv.layoutManager = LinearLayoutManager(context) // 리싸이클러뷰에 아이템 연결 .
 
-//데이터베이스에서 등록된 상품 가지고 아이템 상품 목록에 띄우기 완성.
+        //데이터베이스에서 등록된 상품 가지고 아이템 상품 목록에 띄우기 완성.
         itemsCollectionRef.get().addOnSuccessListener { querySnapshot ->
             for (doc in querySnapshot) {
                 val listTitle = doc.getString("itemtitle") ?: ""
-                // val listImage = doc.getInt("listImage") // 이미지는 필요에 따라 추가
                 val listContents = doc.getString("itemcontent") ?: ""
                 val listPrice = doc.getString("itemprice") ?: ""
 
@@ -78,6 +73,7 @@ class HomeFragment : Fragment() {
                 Log.d("itemcheck", listContents)
                 Log.d("itemcheck", listPrice)
                 Log.d("itemcheck", items.toString())
+                Log.d("doccheck",doc.id)
 
             }
             rvAdapter.notifyDataSetChanged()
@@ -85,12 +81,6 @@ class HomeFragment : Fragment() {
             exception->Log.w("Firestore", "Error getting documents: ", exception)
 
         }
-
-
-
-
-
-
 
 
         rvAdapter.itemClick = object :ContentsRVAdapter.ItemClick{ //아이템 클릭시. 데이터 가지고 해당 상품 페이지로 이동.
@@ -102,26 +92,24 @@ class HomeFragment : Fragment() {
                 intent.putExtra("listTitle",items[position].listTitle)
                 intent.putExtra("listContents",items[position].listContents)
                 intent.putExtra("listPrice",items[position].listPrice)
+                intent.putExtra("DocId",selectedItemID) //docid를 listitem.activity로 보내서. listitem에서도 받은 intent 정보를 edit에다가 보냄.
 
-                Log.d("check",selectedItemID.toString())
-//                intent.putExtra("listImage",items[position].listImage)
+                Log.d("doccheck",selectedItemID.toString())
+
 
                 context?.startActivity(intent)
-
             }
 
         }
 
-
-
-
+        //하나의 상품 클릭시 . 해당 아이템이 저장된 documentId가 Intent에 담겨져서 , AddListActivity. 즉 상품의 정보가 담긴 페이지로 이동.
+        //AddListActivity에서는 상품 수정 버튼을 누르면 ,
 
 
 
                     //상품 추가 버튼 클릭시 상품 추가하는 액티비티로 이동.
                 binding.addListBtn.setOnClickListener {
                     val intent = Intent(context, AddListActivity::class.java)
-                    intent.putExtra("DocumentID",selectedItemID)
                     startActivity(intent)
 
                 }

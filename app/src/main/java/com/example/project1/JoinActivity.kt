@@ -11,12 +11,16 @@ import com.example.project1.databinding.ActivityLoginBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.firestore
 
 class JoinActivity : AppCompatActivity() { //회원 가입기능.
 
     lateinit var binding: ActivityJoinBinding
     private lateinit var auth: FirebaseAuth
+    private var db: FirebaseFirestore = Firebase.firestore
+    private var userRef = db.collection("user")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJoinBinding.inflate(layoutInflater)
@@ -57,11 +61,15 @@ class JoinActivity : AppCompatActivity() { //회원 가입기능.
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
+                        val user = Firebase.auth.currentUser
+
                         Toast.makeText(this,"회원가입 성공.",Toast.LENGTH_SHORT).show()
+                        saveUser(user?.uid,name,birthday)
 
                         val intent = Intent(this,MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                         startActivity(intent)
+                        finish()
 
                     }
                     else {
@@ -73,8 +81,23 @@ class JoinActivity : AppCompatActivity() { //회원 가입기능.
                 }
 
              }
+
         }
+
+
      }
+    private fun saveUser(userId : String?,name:String?,birthday:String?){
+        val UserMap = hashMapOf(
+            "name" to name,
+            "birthday" to birthday
+        )
+
+        userRef.document(userId ?:"")
+            .set(UserMap)
+            .addOnSuccessListener {  }
+            .addOnFailureListener {  }
+
+    }
 
 
     }
